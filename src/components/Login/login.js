@@ -29,7 +29,8 @@ class Login extends Component {
             if(data.access)
             localStorage.setItem("token",data.access)
             this.setState({
-               islogged: true
+               islogged: true,
+               
              });
 
             }
@@ -46,6 +47,7 @@ class Login extends Component {
     render()
     {
       if (localStorage.getItem("token")) {
+
          return <Redirect to="/dashboard" />;
        }
        if (this.state.islogged == true) {
