@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import {NavLink,Redirect,BrowserRouter } from 'react-router-dom';
 import Machine from '../machines/Machine'
+import { Link } from 'react-router-dom';
+import ClientList from '../clients/ClientList'
+import Client from '../clients/Clients'
+import MachineList from '../machines/MachineList'
 import {Bar, Doughnut} from 'react-chartjs-2';
 
  
@@ -8,6 +12,7 @@ import face1 from '../../../assets/images/faces/face.png';
 import circle from '../../../assets/images/dashboard/circle.svg'
 import people from '../../../assets/images/dashboard/people.png'
 import hero from '../../../assets/images/hero.jpg'
+
 // import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -17,7 +22,8 @@ export class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      islogout: false
+      islogout: false,
+    
     };
   }
   
@@ -31,14 +37,19 @@ export class Dashboard extends Component {
   };
   
   render () {
+
+    // if(this.state.isLoading )
+    // {
+    //    <h1>Loading</h1>
+    // }
     if (this.state.islogout) {
       return <Redirect to="/login" />;
     }
 
     
     return (
-     
-   <div>
+    <div>
+
           <div class="row">
             <div class="col-md-12 grid-margin">
               <div class="row">
@@ -120,12 +131,14 @@ export class Dashboard extends Component {
                   </div>
                 </div>
                 <div class="col-md-6 stretch-card transparent">
-                  <div class="card card-light-danger">
-                    <div class="card-body">
+                  <div class="card card-light-danger client-block">
+                  <Link to ={`/clients`} >
+                    <div class="card-body ">
                       <p class="mb-4">Our Clients</p>
                       <p class="fs-30 mb-2">47033</p>
                       <p>0.22% (30 days)</p>
                     </div>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -133,6 +146,7 @@ export class Dashboard extends Component {
           </div>
 
           <Machine  />
+          <Client />
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">

@@ -65,23 +65,24 @@ class Sidebar extends Component {
               </li> */}
 
 
-<li class="nav-item">
+             <li class="nav-item">
                 <NavLink class="nav-link" to= "/clients">
                 <i class="icon-layout menu-icon"></i>
                 <FiGrid></FiGrid> &nbsp;
-                  <span class="menu-title">Reports</span>
+                  <span class="menu-title">Clients</span>
                 </NavLink>
               </li>
 
 
 
               <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                  <i class="icon-columns menu-icon"></i>
-                  <FiColumns></FiColumns>&nbsp;
-                  <span class="menu-title">Certificates</span>
-               
-                </a>
+              <NavLink class="nav-link" to= "/machines">
+                <i class="icon-layout menu-icon"></i>
+                <FiColumns></FiColumns> &nbsp;
+                  <span class="menu-title">Machines</span>
+                </NavLink>
+
+            
               
               </li>
               <li class="nav-item">
@@ -101,7 +102,7 @@ class Sidebar extends Component {
                 <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                   <i class="icon-head menu-icon"></i>
                   <FiUser></FiUser> &nbsp;
-                  <span class="menu-title">Clients</span>
+                  <span class="menu-title">Reports</span>
                  
                 </a>
                 <div class="collapse" id="auth">

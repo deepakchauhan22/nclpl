@@ -111,3 +111,43 @@ a{
     padding: .375rem .75rem!important;
     z-index:100;
 }
+
+.fs-25{
+  font-size: 25px;
+}
+.client-box{
+  cursor: pointer;
+  margin: 5px;
+  color: #fff;
+  text-decoration: none!important;
+}
+.client-box a, .client-box a:hover{
+  margin: 5px;
+  color: #fff;
+  text-decoration: none;
+}
+
+
+/* .client-block a, .client-block a:hover {
+  color: #fff;
+  text-decoration: none;
+} */
+.client-block a,.client-block a:hover{
+  color: #fff;
+  text-decoration: none;
+}
+
+.machine-form{
+  width: 50%;
+  margin: auto;
+}
+
+.dashLoader{
+  text-align: center;
+}
+.center {
+  position: absolute;
+  top:50%;
+  left: 50%;
+  text-align: center;
+}

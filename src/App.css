@@ -20216,6 +20216,7 @@ code {
 .card-people .weather-info {
   position: absolute;
   right: 10px;
+  top:20px;
 }
 
 .card-people .weather-info sup {
@@ -20227,12 +20228,7 @@ code {
   margin-bottom: 0;
 }
 
-.weather-info {
-  position: absolute;
-  top: 30px;
-  right: 10px;
-  
-}
+
 
 .weather-info1{
   

@@ -5,13 +5,21 @@ import Sidebar from './Shared/Sidebar';
 import { Switch, Route, Redirect,BrowserRouter } from 'react-router-dom';
 import  Dashboard from './Admin/dashboard/Dashboard';
 import  Clients from './Admin/clients/Clients';
+import  MemberDetail from './Admin/clients/MemberDetail';
+import MachineList from './Admin/machines/MachineList'
+import MainClient from './Admin/clients/MainClient';
+
+import {FaSpinner} from  "react-icons/fa";
+import { Loading } from './Shared/Loading';
 
 class AdminDashboard extends Component{
 
   constructor(props) {
     super(props);
     this.state = {
-      islogout: false
+      token: localStorage.getItem('token'),
+      islogout: false,
+      isLoading:true,
     };
   }
   signOut = (e) => {
@@ -22,27 +30,22 @@ class AdminDashboard extends Component{
     });
   };
 
-//   state = {
-//     machines:[]
-//   }
+  getData(){
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 1000)
+  }
 
-//   loadMachines = event=> {
-//     console.log(this.state.credentials);
-//     fetch('http://127.0.0.1:8000/machines/list',{
-//         method: 'GET',
-//         headers: {'Content-Type': 'application/JSON'},
-//         body: JSON.stringify(this.state.credentials)
-//     })
-//     .then(data => data.json())
-//     .then(
-//         data =>{
-//            this.setState({machines:data})
-//         }
-//     ).catch(error => console.error(error)) 
-// }
+  componentDidMount() {
+    this.getData();
+}
 
     render(){
 
+     
+           
       
       if (this.state.islogout) {
         return <Redirect to="/login" />;
@@ -50,6 +53,7 @@ class AdminDashboard extends Component{
 
         return(
           <BrowserRouter>
+                {this.state.isLoading ?   <Loading/>  : 
             <div className="container-scroller">
            <Navbar/>
        
@@ -63,14 +67,16 @@ class AdminDashboard extends Component{
             </button>
                 <Switch>
                     <Route exact path='/dashboard' component={ Dashboard } />
-                    <Route path='/clients' component={ Clients } />
+                    <Route path='/clients' component={ MainClient } />
+                    <Route path='/machines' component={ MachineList } />
+                    <Route path = '/clients/:clientId' component={ MemberDetail }/>
                    <Redirect to='/dashboard' />
                  </Switch>
                 </div>
             
               </div>
             </div>
-          </div>
+          </div>}
           </BrowserRouter>
         )
     }

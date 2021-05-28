@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import {useHistory} from "react-router-dom";
+import {Loading} from '../Shared/Loading';
+import {FaSpinner} from  "react-icons/fa";
 import {  Redirect, Route, Link } from 'react-router-dom';
 
 
@@ -8,6 +10,7 @@ class Login extends Component {
     constructor(props){
         super(props)
         let islogged= false;
+        let  isLoading=true;
         this.state = {
             credentials :{email:'',password:''}
         }
@@ -15,6 +18,7 @@ class Login extends Component {
   
     login = e => {
         e.preventDefault();
+        this.setState({isLoading:true })
       //   console.log(this.state.credentials);
         fetch('http://127.0.0.1:8000/api/token/',{
             method: 'POST',
@@ -30,6 +34,7 @@ class Login extends Component {
             localStorage.setItem("token",data.access)
             this.setState({
                islogged: true,
+               isLoading: false
                
              });
 
@@ -46,13 +51,16 @@ class Login extends Component {
     
     render()
     {
-      if (localStorage.getItem("token")) {
+      
+        
 
+      if (localStorage.getItem("token")) {
          return <Redirect to="/dashboard" />;
        }
        if (this.state.islogged == true) {
          return <Redirect to="/dashboard" />;
        }
+
        
         return (
      <div>
@@ -75,7 +83,10 @@ class Login extends Component {
                      <label>Password</label>
                      <input type="password" name= "password"  class="form-control" placeholder="Password" value = {this.state.credentials.password} onChange = {this.inputChanged}/>
                   </div>
-                  <button type="submit" class="btn btn-black" onClick = {this.login}>Login</button>
+                  <button type="submit" class="btn btn-black" onClick = {this.login} disabled={this.state.isLoading}>
+                     {this.state.isLoading &&  <FaSpinner></FaSpinner> }
+                     &nbsp;
+                     Login</button>
                   <Link to = "/register" class= "register-btn">Register </Link>
                   {/* <button type="submit" class="btn btn-secondary"onClick = {this.register}>Register</button> */}
                {/* </form> */}

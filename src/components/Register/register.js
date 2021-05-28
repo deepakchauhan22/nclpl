@@ -1,15 +1,16 @@
 
 import React,{Component} from 'react';
 import { Redirect, Switch, Route, Link } from 'react-router-dom';
-
+import {FaSpinner} from  "react-icons/fa";
 
 class Register extends Component {
 
    constructor(props){
       super(props)
       let IsRegistered= false;
+      let isLoading = true;
       this.state = {
-         credentials :{email:'',user_name:'',date_of_birth:'',password:''}
+         credentials :{email:'',user_name:'',company:'',date_of_birth:'',password:''}
       }
   }
    //  state = {
@@ -17,6 +18,7 @@ class Register extends Component {
    //  }
 
     register = event => {
+      this.setState({isLoading:true })
        console.log(this.state.credentials);
         fetch('http://127.0.0.1:8000/api/register/', {
           method: 'POST',
@@ -29,7 +31,8 @@ class Register extends Component {
             console.log(data.data);
             if(data.data == 'ok_message')
             this.setState({
-               IsRegistered: true
+               IsRegistered: true,
+                isLoading : false
              });
           }
         )
@@ -44,6 +47,7 @@ class Register extends Component {
     render()
     {
       if (this.state.IsRegistered == true) {
+         // alert("Registered Successfully ")
          return <Redirect to="/login" />;
        }
        
@@ -66,8 +70,12 @@ class Register extends Component {
                      <input type="text"  name= "email" class="form-control" placeholder="User Name" value = {this.state.credentials.email} onChange = {this.inputChanged}/>
                   </div>
                   <div class="form-group">
-                     <label>Username </label>
+                     <label>full name </label>
                      <input type="text"  name= "user_name" class="form-control" placeholder="User Name" value = {this.state.credentials.user_name} onChange = {this.inputChanged}/>
+                  </div>
+                  <div class="form-group">
+                     <label>Company</label>
+                     <input type="text"  name= "company" class="form-control" placeholder="User Name" value = {this.state.credentials.company} onChange = {this.inputChanged}/>
                   </div>
                   <div class="form-group">
                   <label for="example-date-input">Date of Birth</label>
@@ -78,7 +86,11 @@ class Register extends Component {
                      <input type="password" name= "password"  class="form-control" placeholder="Password" value = {this.state.credentials.password} onChange = {this.inputChanged}/>
                   </div>
             
-                  <button type="submit" class="btn btn-black"onClick = {this.register}>Register</button>
+                  <button type="submit" class="btn btn-black"onClick = {this.register} disabled={this.state.isLoading}>
+                  {this.state.isLoading &&  <FaSpinner></FaSpinner>  }
+                  &nbsp; Register</button>
+
+                  
 
                   <Link to = "/login" class="login-btn">Login </Link>
                {/* </form> */}

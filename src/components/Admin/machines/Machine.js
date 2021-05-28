@@ -70,67 +70,77 @@ class Machine extends Component {
     console.log(machines);
     console.log('output');
 
-    if(this.state.machines != null) {
+
+  
+    if(machines.code == "token_not_valid") {
+      return <h1> No machines</h1>
+    }
+    
+    
+    else    
+    {
 
       return (
-        <div className="row">
+        <div >
           {/* {this.renderItems()} */}
 
-          <ul>
+ 
           {/* <p>data {JSON.stringify(machines)}</p> */}
 
 
+       
+
           <div class="row" >
-<div class="col-md-12 grid-margin stretch-card">
-  <div class="card">
-    <div class="card-body">
-      <p class="card-title">Recent Calibrations</p>
-      <div class="row">
-        <div class="col-12">
-          <div class="table-responsive">
-            <table  id="example" class="display expandable-table" style={{width: "100%"}}>
-              <thead>
-                <tr>
-                  <th>Client#</th>
-                  <th>Machine</th>
-                  <th>Cert no.</th>
-                  <th>Request Date</th>
-                  <th>Calibrated On</th>
-                  <th>Cert Issue Date</th>
-                  <th>Next Due Date</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-              {machines.map(item => (
-              // <li key={item.id}>
-              //   <h3>{item.user}</h3>
-              //   <p>{item.nomenclature}</p>
-              // </li>
+                                  <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <p class="card-title">Recent Calibrations</p>
+                                      
+                                        <div class="row">
+                                          <div class="col-12">
+                                            <div class="table-responsive">
+                                              <table  id="example" class="display expandable-table" style={{width: "100%"}}>
+                                                <thead>
+                                                  <tr>
+                                                    <th>Client#</th>
+                                                    <th>Machine</th>
+                                                    <th>Cert no.</th>
+                                                    <th>Request Date</th>
+                                                    <th>Calibrated On</th>
+                                                    <th>Cert Issue Date</th>
+                                                    <th>Next Due Date</th>
+                                                    <th></th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                 {machines.map(item => (
+                                                // <li key={item.id}>
+                                                //   <h3>{item.user}</h3>
+                                                //   <p>{item.nomenclature}</p>
+                                                // </li>
 
-<tr key={item.id}>
-<td>{item.id}</td>
-<td>{item.user}</td>
-<td>{item.nomenclature}</td>
-<td>{item.company}</td>
-<td>{item.certificate_number}</td>
-<td>{item.calibrated_date}</td>
-<td>{item.certificate_date}</td>
-</tr>
+                                              <tr key={item.id}>
+                                              <td>{item.id}</td>
+                                              <td>{item.user}</td>
+                                              <td>{item.nomenclature}</td>
+                                              <td>{item.company}</td>
+                                              <td>{item.certificate_number}</td>
+                                              <td>{item.calibrated_date}</td>
+                                              <td>{item.certificate_date}</td>
+                                              </tr>
 
-            ))}
-               
-              </tbody>
-          </table>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
-          
-          </ul>
+                                              ))} 
+                                                
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                          </div>
+        
         </div>
       );
     }
