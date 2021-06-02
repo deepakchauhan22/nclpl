@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../assets/images/logo.jpg';
 import logomini from '../../assets/images/logo-mini.svg';
-import face1 from '../../assets/images/faces/face.png';
+import face1 from '../../assets/images/faces/face3.png';
 import { FiMenu,FiSearch,FiBell } from "react-icons/fi";
 import {NavLink,Redirect,BrowserRouter } from 'react-router-dom';
 

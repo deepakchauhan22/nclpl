@@ -151,3 +151,65 @@ a{
   left: 50%;
   text-align: center;
 }
+
+.machine-table thead tr th {
+  background:#ffffff!important;
+  color: #000!important;
+ 
+}
+.machine-table tbody tr:nth-of-type(odd) {
+  background-color: #F5F7FF;
+}
+.logout-list{
+
+ padding: 0.8125rem 1.937rem 0.8125rem 2rem;
+}
+
+.logout-list .btn{
+  padding: .375rem .75rem;
+    padding-top: 0.375rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.375rem;
+    padding-left: 0.75rem;
+}
+
+.machine-header p {
+ display: inline-block;
+}
+.machine-searchbox{
+  float: right;
+}
+
+
+#page-numbers {
+  list-style: none;
+  display: block;
+  text-align: center;
+}
+
+#page-numbers > li {
+  display: inline;
+  margin: 1em;
+  color: blue;
+  user-select: none;
+  cursor: pointer;
+}
+
+.users-list .btn{
+padding: .375rem .75rem!important;
+}
+
+.alertBox .alert{
+  text-align: center;
+  position: fixed;
+  top: 17%;
+  right: 3%;
+  width: 15%;
+  z-index: 100;
+}
+
+.alert-success {
+  color: #fff!important;
+  background-color: #57B657!important;
+  border-color: #57B657!important;
+}

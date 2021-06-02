@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import {NavLink,Redirect,BrowserRouter } from 'react-router-dom';
 import Machine from '../machines/Machine'
 import { Link } from 'react-router-dom';
-import ClientList from '../clients/ClientList'
+import face from '../../../assets/images/faces/face3.png';
+
 import Client from '../clients/Clients'
 import MachineList from '../machines/MachineList'
 import {Bar, Doughnut} from 'react-chartjs-2';
+import { Loading } from '../.././Shared/Loading';
 
- 
-import face1 from '../../../assets/images/faces/face.png';
-import circle from '../../../assets/images/dashboard/circle.svg'
-import people from '../../../assets/images/dashboard/people.png'
-import hero from '../../../assets/images/hero.jpg'
 
 // import "react-datepicker/dist/react-datepicker.css";
 
@@ -23,10 +20,50 @@ export class Dashboard extends Component {
     super(props);
     this.state = {
       islogout: false,
+      userDetails: [],
+      isLoading:true,
+      token: localStorage.getItem('token'),
     
     };
   }
+
   
+  componentDidMount() {
+
+    // const url = `https://newsapi.org/v2/${this.props.news.type}?${this.props.news.query}&apiKey=2f5b88c782444575a24e7499ee1bd726`;
+    const url = 'http://127.0.0.1:8000/api/detail/';
+    // var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjIyMDY2ODgwLCJqdGkiOiIwNTMxMWEzMGM1Y2Y0NGM1YjU4ZjNiNDQxZjU5NTI1YSIsInVzZXJfaWQiOjZ9.P_fwCxUEEoHlTPYYHpUvXt6xeRpIgVOkjtCnj0MZhaU'
+        
+   fetch(url,{
+    
+      method: "GET",
+    
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.state.token
+        }
+       
+    })
+    
+    .then((res) => res.json())
+    
+      .then((data) => {
+        console.log("deepak"+ data);
+        this.setState({
+          userDetails: data,
+          isLoading:false,
+    
+        })
+      } 
+      )
+      .catch((error) => {
+        this.setState({
+            error:true
+        })
+    });
+  }
+
   signOut = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
@@ -38,13 +75,15 @@ export class Dashboard extends Component {
   
   render () {
 
-    // if(this.state.isLoading )
-    // {
-    //    <h1>Loading</h1>
-    // }
+    const { userDetails } = this.state;
+
+
+  
     if (this.state.islogout) {
       return <Redirect to="/login" />;
     }
+
+    
 
     
     return (
@@ -54,54 +93,17 @@ export class Dashboard extends Component {
             <div class="col-md-12 grid-margin">
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                  <h3 class="font-weight-bold">Welcome! Deepak</h3>
+                  <h4 class="font-weight-bold">Welcome! {userDetails.user_name}</h4>
                   <h6 class="font-weight-normal mb-0">I hope you are having a Good day! You have <span class="text-primary">3 unread alerts!</span></h6>
                 </div>
                 
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card tale-bg">
-                <div class="card-people">
-                  {/* <img src={hero} alt="people" class="img-fluid"/> */}
-                  <div class="weather-info">
-
-                  <div>
-                 <div class="justify-content-end d-flex">
-                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                    <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                     <i class="mdi mdi-calendar"></i> Today (25 May 2021)
-                    </button>
-                  
-
-   
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                      <a class="dropdown-item" href="#">January - March</a>
-                      <a class="dropdown-item" href="#">March - June</a>
-                      <a class="dropdown-item" href="#">June - August</a>
-                      <a class="dropdown-item" href="#">August - November</a>
-                    </div>
-                  </div>
-                 </div>
-                </div>
-                    {/* <div class="d-flex weather-info1">
-                      <div>
-                        <h3 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>&#176;</sup>c</h3>
-                      </div>
-                      <div class="ml-2">
-                        <h4 class="location font-weight-normal">Ghaziabad</h4>
-                        <h6 class="font-weight-normal">India</h6>
-                      </div>
-                    </div> */}
-                  </div> 
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 grid-margin transparent">
+          <div className="row"> 
+            <div class="col-md-12 grid-margin transparent">
               <div class="row">
-                <div class="col-md-6 mb-4 stretch-card transparent">
+                <div class="col-md-3 mb-4 stretch-card transparent">
                   <div class="card card-tale">
                     <div class="card-body">
                       <p class="mb-4">Today’s Meetings</p>
@@ -110,7 +112,7 @@ export class Dashboard extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 mb-4 stretch-card transparent">
+                <div class="col-md-3 mb-4 stretch-card transparent">
                   <div class="card card-dark-blue">
                     <div class="card-body">
                       <p class="mb-4">Completed Calibrations</p>
@@ -119,9 +121,9 @@ export class Dashboard extends Component {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+              
+           
+                <div class="col-md-3 mb-4 stretch-card transparent">
                   <div class="card card-light-blue">
                     <div class="card-body">
                       <p class="mb-4">Pending Calibrations</p>
@@ -130,11 +132,11 @@ export class Dashboard extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 stretch-card transparent">
+                <div class="col-md-3 mb-4 stretch-card transparent">
                   <div class="card card-light-danger client-block">
                   <Link to ={`/clients`} >
                     <div class="card-body ">
-                      <p class="mb-4">Our Clients</p>
+                      <p class="mb-4">Clients Data</p>
                       <p class="fs-30 mb-2">47033</p>
                       <p>0.22% (30 days)</p>
                     </div>
@@ -342,8 +344,8 @@ export class Dashboard extends Component {
                           <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
                             <div class="ml-xl-4 mt-3">
                             <p class="card-title">Detailed Reports</p>
-                              <h1 class="text-primary">$34040</h1>
-                              <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
+                              <h1 class="text-primary">&#8377;34040</h1>
+                              <h3 class="font-weight-500 mb-xl-4 text-primary">North Delhi</h3>
                               <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
                             </div>  
                             </div>
@@ -353,7 +355,7 @@ export class Dashboard extends Component {
                                 <div class="table-responsive mb-3 mb-md-0 mt-3">
                                   <table class="table table-borderless report-table">
                                     <tr>
-                                      <td class="text-muted">Illinois</td>
+                                      <td class="text-muted">TataSteel</td>
                                       <td class="w-100 px-0">
                                         <div class="progress progress-md mx-4">
                                           <div class="progress-bar bg-primary" role="progressbar" style={{width: "70%"}} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
@@ -362,7 +364,7 @@ export class Dashboard extends Component {
                                       <td><h5 class="font-weight-bold mb-0">713</h5></td>
                                     </tr>
                                     <tr>
-                                      <td class="text-muted">Washington</td>
+                                      <td class="text-muted">Minda</td>
                                       <td class="w-100 px-0">
                                         <div class="progress progress-md mx-4">
                                           <div class="progress-bar bg-warning" role="progressbar" style={{width: "30%"}} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
@@ -371,7 +373,7 @@ export class Dashboard extends Component {
                                       <td><h5 class="font-weight-bold mb-0">583</h5></td>
                                     </tr>
                                     <tr>
-                                      <td class="text-muted">Mississippi</td>
+                                      <td class="text-muted">Bhel</td>
                                       <td class="w-100 px-0">
                                         <div class="progress progress-md mx-4">
                                           <div class="progress-bar bg-danger" role="progressbar" style={{width: "95%"}} aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
@@ -380,7 +382,7 @@ export class Dashboard extends Component {
                                       <td><h5 class="font-weight-bold mb-0">924</h5></td>
                                     </tr>
                                     <tr>
-                                      <td class="text-muted">California</td>
+                                      <td class="text-muted">Motherson</td>
                                       <td class="w-100 px-0">
                                         <div class="progress progress-md mx-4">
                                           <div class="progress-bar bg-info" role="progressbar" style={{width: "60%"}} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
@@ -389,7 +391,7 @@ export class Dashboard extends Component {
                                       <td><h5 class="font-weight-bold mb-0">664</h5></td>
                                     </tr>
                                     <tr>
-                                      <td class="text-muted">Maryland</td>
+                                      <td class="text-muted">AirAsia</td>
                                       <td class="w-100 px-0">
                                         <div class="progress progress-md mx-4">
                                           <div class="progress-bar bg-primary" role="progressbar" style={{width: "40%"}} aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
@@ -398,7 +400,7 @@ export class Dashboard extends Component {
                                       <td><h5 class="font-weight-bold mb-0">560</h5></td>
                                     </tr>
                                     <tr>
-                                      <td class="text-muted">Alaska</td>
+                                      <td class="text-muted">AVlight</td>
                                       <td class="w-100 px-0">
                                         <div class="progress progress-md mx-4">
                                           <div class="progress-bar bg-danger" role="progressbar" style={{width: "75%"}} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
@@ -410,8 +412,43 @@ export class Dashboard extends Component {
                                 </div>
                               </div>
                               <div class="col-md-6 mt-3">
-                                <canvas id="north-america-chart"></canvas>
-                                <div id="north-america-legend"></div>
+                              <div class="card">
+                                <div class="card-body">
+                                  <p class="card-title">Notifications</p>
+                                  <ul class="icon-data-list">
+                                    <li>
+                                      <div class="d-flex">
+                                        <img src={face} alt="user"/>
+                                        <div>
+                                          <p class="text-info mb-1">Deepak Chauhan</p>
+                                          <p class="mb-0">New Client have been Added</p>
+                                          <small>9:30 am</small>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="d-flex">
+                                        <img src={face} alt="user"/>
+                                        <div>
+                                          <p class="text-info mb-1">Naveen Chaudhary</p>
+                                          <p class="mb-0">New Machine added by Naveen Chaudhary</p>
+                                          <small>10:30 am</small>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="d-flex">
+                                      <img src={face} alt="user"/>
+                                    <div>
+                                      <p class="text-info mb-1">Kanish Tyagi</p>
+                                      <p class="mb-0">User detail have been changed</p>
+                                      <small>11:30 am</small>
+                                    </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
                               </div>
                             </div>
                           </div>
@@ -422,8 +459,8 @@ export class Dashboard extends Component {
                           <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
                             <div class="ml-xl-4 mt-3">
                             <p class="card-title">Detailed Reports</p>
-                              <h1 class="text-primary">$34040</h1>
-                              <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
+                              <h1 class="text-primary">&#8377; 34040</h1>
+                              <h3 class="font-weight-500 mb-xl-4 text-primary">Delhi NCR</h3>
                               <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
                             </div>  
                             </div>
@@ -511,7 +548,7 @@ export class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div class="row">
+          {/* <div class="row">
             <div class="col-md-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -635,8 +672,8 @@ export class Dashboard extends Component {
 								</div>
 							</div>
             </div>
-          </div>
-          <div class="row">
+          </div> */}
+          {/* <div class="row">
             <div class="col-md-4 stretch-card grid-margin">
               <div class="card">
                 <div class="card-body">
@@ -763,7 +800,7 @@ export class Dashboard extends Component {
                   <ul class="icon-data-list">
                     <li>
                       <div class="d-flex">
-                        <img src="images/faces/face1.jpg" alt="user"/>
+                        <img src={face} alt="user"/>
                         <div>
                           <p class="text-info mb-1">Isabella Becker</p>
                           <p class="mb-0">Sales dashboard have been created</p>
@@ -773,7 +810,7 @@ export class Dashboard extends Component {
                     </li>
                     <li>
                       <div class="d-flex">
-                        <img src="images/faces/face2.jpg" alt="user"/>
+                        <img src={face} alt="user"/>
                         <div>
                           <p class="text-info mb-1">Adam Warren</p>
                           <p class="mb-0">You have done a great job #TW111</p>
@@ -783,7 +820,7 @@ export class Dashboard extends Component {
                     </li>
                     <li>
                       <div class="d-flex">
-                      <img src="images/faces/face3.jpg" alt="user"/>
+                      <img src={face} alt="user"/>
                      <div>
                       <p class="text-info mb-1">Leonard Thornton</p>
                       <p class="mb-0">Sales dashboard have been created</p>
@@ -793,7 +830,7 @@ export class Dashboard extends Component {
                     </li>
                     <li>
                       <div class="d-flex">
-                        <img src="images/faces/face4.jpg" alt="user"/>
+                        <img src={face} alt="user"/>
                         <div>
                           <p class="text-info mb-1">George Morrison</p>
                           <p class="mb-0">Sales dashboard have been created</p>
@@ -803,7 +840,7 @@ export class Dashboard extends Component {
                     </li>
                     <li>
                       <div class="d-flex">
-                        <img src="images/faces/face5.jpg" alt="user"/>
+                        <img src={face} alt="user"/>
                         <div>
                         <p class="text-info mb-1">Ryan Cortez</p>
                         <p class="mb-0">Herbs are fun and easy to grow.</p>
@@ -816,7 +853,7 @@ export class Dashboard extends Component {
               </div>
             </div>
           </div>
-          
+           */}
        
       </div>
     )

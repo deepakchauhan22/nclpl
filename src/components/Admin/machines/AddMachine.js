@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {useHistory} from "react-router-dom";
 import {  Redirect, Route, Link } from 'react-router-dom';
 import {FaSpinner} from  "react-icons/fa";
+import { Container, Button, Alert } from 'react-bootstrap'; 
 
 class AddMachine extends Component {
    
@@ -10,14 +11,14 @@ class AddMachine extends Component {
         let IsAdded= false;
         let  isLoading=true;
         this.state = {
-            credentials :{id:'',user:'',nomenclature:'',certificate_number:'',calibrated_date:'',certificate_date:'',expiry_date:''}
+            credentials :{company:'',user:'',nomenclature:'',certificate_number:'',calibrated_date:'',certificate_date:'',expiry_date:''}
             ,token: localStorage.getItem('token'),
         }
     }
     addMachine = event => {
         console.log(this.state.credentials);
         this.setState({isLoading:true })
-         fetch('http://127.0.0.1:8000/machines/create', {
+         fetch('http://127.0.0.1:8000/machines/create/', {
            method: 'POST',
            headers: {'Content-Type': 'application/json',
            Authorization: "Bearer " + this.state.token},
@@ -45,16 +46,13 @@ class AddMachine extends Component {
     
     render()
     {
-        if (this.state.IsAdded == true) {
-            return <Redirect to="/machines" />;
-          }
-          
+     
        
         return (
      <div>
           <div class="row">
          <div class="col-md-12 col-sm-12">
-
+         {this.state.IsAdded && <div><br /><Alert variant="success">Added Successfully </Alert></div>}
          <h3 class="font-weight-bold">Add New Machines</h3>
                  
 
@@ -63,10 +61,10 @@ class AddMachine extends Component {
                {/* <form> */}
                   <div class="form-group">
                      <label>Company </label>
-                     <input type="text"  name= "id" class="form-control" placeholder="User Name" value = {this.state.credentials.id} onChange = {this.inputChanged}/>
+                     <input type="text"  name= "company" class="form-control" placeholder="User Name" value = {this.state.credentials.company} onChange = {this.inputChanged}/>
                   </div>
                   <div class="form-group">
-                     <label>UserD </label>
+                     <label>Email </label>
                      <input type="text"  name= "user" class="form-control" placeholder="User Name" value = {this.state.credentials.user} onChange = {this.inputChanged}/>
                   </div>
                   <div class="form-group">
@@ -82,17 +80,17 @@ class AddMachine extends Component {
                     <input class="form-control" type="date" name= "calibrated_date" value="2011-08-19" id="example-date-input" value = {this.state.credentials.calibrated_date} onChange = {this.inputChanged}/>
                  </div>
                  <div class="form-group">
-                  <label for="example-date-input">Date of Birth</label>
+                  <label for="example-date-input">Certficate Date</label>
                     <input class="form-control" type="date" name= "certificate_date" value="2011-08-19" id="example-date-input" value = {this.state.credentials.certificate_date} onChange = {this.inputChanged}/>
                  </div>
                  <div class="form-group">
-                  <label for="example-date-input">Date of Birth</label>
+                  <label for="example-date-input">Expiry Date</label>
                     <input class="form-control" type="date" name= "expiry_date" value="2011-08-19" id="example-date-input" value = {this.state.credentials.expiry_date} onChange = {this.inputChanged}/>
                  </div>
                  
                  
             
-                  <button type="submit" class="btn btn-black"onClick = {this.addMachine}>
+                  <button type="submit" class="btn btn-black" onClick = {this.addMachine}>
                      {this.state.isLoading &&  <FaSpinner></FaSpinner> }
                     &nbsp;
                     Add Machine

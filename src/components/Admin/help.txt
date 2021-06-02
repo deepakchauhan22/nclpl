@@ -1,0 +1,16 @@
+  {/* {Clients.map(client => (
+            
+               <div key={client.company_name} class="card card-light-blue ">
+            <div class="card-body">
+              <h4 class="mb-4">{client.company_name}</h4>
+              <button onClick={() => 
+      this.setState({selectedClient:client.company_name})}>
+      Data</button>
+                       </div>
+                     </div> 
+             
+               
+              ))} 
+
+
+{!!selectedClient && (<MemberDetail token = {token} company_name={selectedClient}/>)} */}

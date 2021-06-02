@@ -9,20 +9,15 @@ class Machine extends Component {
       machines: [],
       token: localStorage.getItem('token'),
       error: false,
+      filter: "",
     };
   }
 
   componentDidMount() {
 
     // const url = `https://newsapi.org/v2/${this.props.news.type}?${this.props.news.query}&apiKey=2f5b88c782444575a24e7499ee1bd726`;
-    const url = 'http://127.0.0.1:8000/machines/list';
+    const url = 'http://127.0.0.1:8000/machines/list/';
     // var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjIyMDY2ODgwLCJqdGkiOiIwNTMxMWEzMGM1Y2Y0NGM1YjU4ZjNiNDQxZjU5NTI1YSIsInVzZXJfaWQiOjZ9.P_fwCxUEEoHlTPYYHpUvXt6xeRpIgVOkjtCnj0MZhaU'
-        
-    // console.log("old token  " + token)
-    // localStorage.getItem('token')
-
-
-    //      console.log("dee token " +this.state.author)
  
     fetch(url,{
     
@@ -53,24 +48,18 @@ class Machine extends Component {
     });
   }
 
-  // renderItems() {
-  //   if(!this.state.error){
-  //   return this.state.news.map((item) => (
-  //     <NewSingle key={item.url} item={item} />
-  //   ));
-  //   }
-  //   else{
-  //       return <Error />
-  //   }
-  // }
+  handleChange = event => {
+    this.setState({ filter: event.target.value });
+  };
 
   render() {
 
-    const { machines } = this.state;
-    console.log(machines);
-    console.log('output');
-
-
+    
+    const { filter, machines } = this.state;
+   
+    const filteredMachines = machines.filter(machine => {
+     return machine.nomenclature.toLowerCase().indexOf(filter.toLowerCase()) !== -1;
+   });
   
     if(machines.code == "token_not_valid") {
       return <h1> No machines</h1>
@@ -93,40 +82,47 @@ class Machine extends Component {
           <div class="row" >
                                   <div class="col-md-12 grid-margin stretch-card">
                                     <div class="card">
-                                      <div class="card-body">
-                                        <p class="card-title">Recent Calibrations</p>
+                                      <div class="card-body machine-header">
+                                        <p class="card-title machine-title">Recent Calibrations</p>
+                                        <p class="card-title machine-searchbox mb-0">
+                                          
+                                        <input value={filter} onChange={this.handleChange}  type="search" id="form1" class="form-control" placeholder="Search Nomenclature" aria-label="Search" />
+                
+                                          
+                                          </p>
                                       
-                                        <div class="row">
+                                        <div class="row mt-3">
                                           <div class="col-12">
                                             <div class="table-responsive">
-                                              <table  id="example" class="display expandable-table" style={{width: "100%"}}>
+                                              <table  id="example" class="display expandable-table machine-table" style={{width: "100%"}}>
                                                 <thead>
                                                   <tr>
-                                                    <th>Client#</th>
-                                                    <th>Machine</th>
-                                                    <th>Cert no.</th>
-                                                    <th>Request Date</th>
+                                                    <th>Client</th>
+                                                    <th>User</th>
+                                                    <th>Nomenclature</th>
+                                                    <th>Certificate No.</th>
                                                     <th>Calibrated On</th>
-                                                    <th>Cert Issue Date</th>
-                                                    <th>Next Due Date</th>
-                                                    <th></th>
+                                                    <th>Certificate Date</th>
+                                                    <th>Expiry Date</th>
+                                                   
                                                   </tr>
                                                 </thead>
                                                 <tbody>
-                                                 {machines.map(item => (
+                                                 {filteredMachines.map(item => (
                                                 // <li key={item.id}>
                                                 //   <h3>{item.user}</h3>
                                                 //   <p>{item.nomenclature}</p>
                                                 // </li>
 
                                               <tr key={item.id}>
-                                              <td>{item.id}</td>
+                                              <td>{item.company} </td>
                                               <td>{item.user}</td>
                                               <td>{item.nomenclature}</td>
-                                              <td>{item.company}</td>
                                               <td>{item.certificate_number}</td>
                                               <td>{item.calibrated_date}</td>
                                               <td>{item.certificate_date}</td>
+                                
+                                              <td class="font-weight-medium"><div class="badge badge-warning">{item.expiry_date}</div></td>
                                               </tr>
 
                                               ))} 

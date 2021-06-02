@@ -14,7 +14,11 @@ function App() {
   // }
   return (
     <Router>
-        <switch>
+
+<div className="App">
+   <AdminDashboard />
+    </div>
+        {/* <switch>
             <Route exact path='/login' component={ Login } />
             <ProtectedRoute path="/dashboard"> 
             </ProtectedRoute>
@@ -26,13 +30,10 @@ function App() {
             <Route path="*">
           <Redirect from="/" to="dashboard" />
         </Route>
-            {/* <Redirect to="/login" /> */}
-        </switch>
-    <div className="App">
-    {/* <AdminDashboard/>  */}
-    {/* <Login userLogin = {userLogin}/> */}
-    {/* <AdminDashboard token={token}/> */}
-    </div>
+           
+
+        </switch> */}
+  
     </Router>
   );
 }

@@ -3,7 +3,9 @@ import logo from '../../assets/images/logo.jpg';
 import logomini from '../../assets/images/logo-mini.svg';
 import {NavLink,Redirect,BrowserRouter } from 'react-router-dom';
 import {  Switch, Route, Link } from 'react-router-dom';
-import { FiGrid,FiLayout,FiColumns,FiBarChart,FiFileText,FiUser,FiX} from "react-icons/fi";
+import { FiGrid,FiColumns,FiBarChart,FiFileText,FiUser,FiX} from "react-icons/fi";
+import { FaAddressBook} from "react-icons/fa";
+import {AiOutlineSafetyCertificate} from "react-icons/ai";
 class Sidebar extends Component {
 
   constructor(props) {
@@ -26,8 +28,8 @@ class Sidebar extends Component {
       }
         return(
             <>
-<div> 
-               <div class="theme-setting-wrapper">
+        <div> 
+            <div class="theme-setting-wrapper">
             <div id="settings-trigger"><i class="ti-settings"></i></div>
             <div id="theme-settings" class="settings-panel">
               <i class="settings-close ti-close"></i>
@@ -48,27 +50,21 @@ class Sidebar extends Component {
 
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-              <li class="nav-item">
-                <NavLink class="nav-link active" to= "/dashboard">
+              <li class="nav-item" >
+                <NavLink class="nav-link " to= "/dashboard">
                 <i class="icon-layout menu-icon"></i>
                 <FiGrid></FiGrid> &nbsp;
                   <span class="menu-title">Dashboard</span>
                 </NavLink>
               </li>
 
-              {/* <li class="nav-item">
-                  <a class="nav-link" data-toggle="collapse" aria-expanded="false" aria-controls="ui-basic">
-              <i class="icon-layout menu-icon"></i>
-              <FiLayout></FiLayout>
-              <span class="menu-title"><Link to='/admin/clients' className="nav-link"> Reports </Link></span>
-            </a>               
-              </li> */}
+
 
 
              <li class="nav-item">
                 <NavLink class="nav-link" to= "/clients">
                 <i class="icon-layout menu-icon"></i>
-                <FiGrid></FiGrid> &nbsp;
+                <FaAddressBook/> &nbsp;
                   <span class="menu-title">Clients</span>
                 </NavLink>
               </li>
@@ -85,53 +81,37 @@ class Sidebar extends Component {
             
               
               </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                  <i class="icon-bar-graph menu-icon"></i>
-                  <FiBarChart></FiBarChart>&nbsp;
-                  <span class="menu-title">Sales</span>
+            
+                <li  class="nav-item">
+                    <NavLink class="nav-link" to= "/users">  
+                 <i class="icon-bar-graph menu-icon"></i>
+               <FiUser></FiUser>&nbsp;
+                  <span class="menu-title">Users</span>
      
-                </a>
-                <div class="collapse" id="charts">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
-                  </ul>
-                </div>
+                  </NavLink> 
+               
               </li>
+
               <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                   <i class="icon-head menu-icon"></i>
-                  <FiUser></FiUser> &nbsp;
-                  <span class="menu-title">Reports</span>
+                  <AiOutlineSafetyCertificate/>  &nbsp;
+                  <span class="menu-title">Certificate</span>
                  
                 </a>
-                <div class="collapse" id="auth">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-                  <i class="icon-ban menu-icon"></i>
-                  <FiX></FiX>&nbsp;
-                  <span class="menu-title">Deadlines</span>
-                 
-                </a>
-                <div class="collapse" id="error">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/documentation/documentation.html">
-                  <i class="icon-paper menu-icon"></i>
-                  <FiFileText></FiFileText> &nbsp;
-                  <span class="menu-title">Reports</span>
-                </a>
+               </li>
+          
+              <li class="nav-item ">
+           
+             
+                  <p className="logout-list">
+                  <button onClick={this.signOut} href="#"  type="button" class="btn btn-black">
+                                              Logout
+                                           </button>
+                  </p>
+                                    
+
+               
               </li>
                   {/* <li class="nav-item">
                     

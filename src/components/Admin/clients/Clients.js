@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
+import { Switch, Route, Redirect,BrowserRouter } from 'react-router-dom';
 import {Bar, Doughnut} from 'react-chartjs-2';
-import ClientList from './ClientList'
 import MemberDetail from './MemberDetail'
 import face1 from '../../../assets/images/faces/face.png';
 import circle from '../../../assets/images/dashboard/circle.svg'
@@ -9,29 +9,35 @@ import people from '../../../assets/images/dashboard/people.png'
 // import "react-datepicker/dist/react-datepicker.css";
 
 import { Link } from 'react-router-dom';
+import Display from './Display';
 
 export class Clients extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Clients: [],
+      clients: [],
+      selectedClient:'',
       token: localStorage.getItem('token'),
       error: false,
+      currentPage: 1,
+      userPerPage: 15,
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
   }
 
   componentDidMount() {
 
-    // const url = `https://newsapi.org/v2/${this.props.news.type}?${this.props.news.query}&apiKey=2f5b88c782444575a24e7499ee1bd726`;
+   
     const url = 'http://127.0.0.1:8000/api/client/';
-    // var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjIyMDY2ODgwLCJqdGkiOiIwNTMxMWEzMGM1Y2Y0NGM1YjU4ZjNiNDQxZjU5NTI1YSIsInVzZXJfaWQiOjZ9.P_fwCxUEEoHlTPYYHpUvXt6xeRpIgVOkjtCnj0MZhaU'
-        
-    // console.log("old token  " + token)
-    // localStorage.getItem('token')
 
 
-    //      console.log("dee token " +this.state.author)
- 
+    
     fetch(url,{
     
       method: "GET",
@@ -49,7 +55,7 @@ export class Clients extends Component {
       .then((data) => {
         console.log("deepak"+ data);
         this.setState({
-          Clients: data,
+          clients: data,
     
         })
       } 
@@ -63,89 +69,44 @@ export class Clients extends Component {
   
   render () {
 
-    const { Clients,token } = this.state;
+    const { clients,token,selectedClient,currentPage,userPerPage } = this.state;
+
+    const indexOfLastPost = currentPage * userPerPage;
+    const indexOfFirstPost = indexOfLastPost - userPerPage;
+    const currentUsers= clients.slice(indexOfFirstPost, indexOfLastPost)
+ 
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(clients.length / userPerPage); i++) {
+      pageNumbers.push(i);
+    }
+      
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <li
+          key={number}
+          id={number}
+          onClick={this.handleClick}
+         className='page-item' >
+          {number}
+        </li>
+        
+         );
+    });
 
 
-    console.log(Clients);
-    console.log(token)
-    console.log('clients'); 
-
-    if(Clients.code == "token_not_valid") {
+    if(clients.code == "token_not_valid") {
       return <h1> Fetching client..</h1>
     }
     
     
 
     return (
-
+      <BrowserRouter> 
       
      
    <div>
-         
-          {/* <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card tale-bg">
-                <div class="card-people mt-auto">
-                  <img src={people} alt="people"/>
-                  <div class="weather-info">
-                    <div class="d-flex">
-                      <div>
-                        <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
-                      </div>
-                      <div class="ml-2">
-                        <h4 class="location font-weight-normal">Bangalore</h4>
-                        <h6 class="font-weight-normal">India</h6>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 grid-margin transparent">
-              <div class="row">
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-tale">
-                    <div class="card-body">
-                      <p class="mb-4">Today’s Bookings</p>
-                      <p class="fs-30 mb-2">4006</p>
-                      <p>10.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-dark-blue">
-                    <div class="card-body">
-                      <p class="mb-4">Total Bookings</p>
-                      <p class="fs-30 mb-2">61344</p>
-                      <p>22.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                  <div class="card card-light-blue">
-                    <div class="card-body">
-                      <p class="mb-4">Number of Meetings</p>
-                      <p class="fs-30 mb-2">34040</p>
-                      <p>2.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 stretch-card transparent">
-                  <div class="card card-light-danger">
-                    <div class="card-body">
-                      <p class="mb-4">Number of Clients</p>
-                      <p class="fs-30 mb-2">47033</p>
-                      <p>0.22% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-      
-          <div class="row">
+         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card position-relative">
                 <div class="card-body">
@@ -173,27 +134,25 @@ export class Clients extends Component {
                     </div>
                   </div>  ))}   */}
                     
-                       {Clients.map(client => (
+                 {currentUsers.map(client => (
             
-                   <Link to ={`/clients/${client.id}`} >
-                           <div key={client.id} class="card card-light-blue ">
+                   <Link to ={`/clients/${client.company_name}`}  >
+                           <div key={client.company_name} class="card card-light-blue ">
                    <div class="card-body">
                      <h4 class="mb-4">{client.company_name}</h4>
-                     <p class="fs-25 mb-2">47033</p>
-                     <p>Machinessss</p>
                    </div>
-                 </div> 
-                 </Link>
-           
-               ))} 
-                   </div>
-                 
-               
-          
+                            </div>                          
+                            </Link>
+                     ))}   
 
-                          
+                  
+                   </div>  
+                 
                           </div>
                         </div>
+                        <ul id="page-numbers">
+              {renderPageNumbers}
+            </ul>
                       </div>
                       <div class="carousel-item">
                         <div class="row">
@@ -289,8 +248,17 @@ export class Clients extends Component {
               </div>
             </div>
           </div>
-          
-         
+          <div className="row"> 
+          {/* <Route path = "/clients/:companyName" component = {MemberDetail}/> */}
+
+          <Route path = "/clients/:companyName" >
+            <MemberDetail   token = {token}/>
+                     </Route>
+                     
+                </div>
+{/*          
+               */}
+
           {/* <MemberDetail Clients = {Clients} token = {token} />  */}
                            
           {/* <div class="row">
@@ -671,6 +639,7 @@ export class Clients extends Component {
             </div> */}
        
       </div>
+      </BrowserRouter>
     )
  
 }

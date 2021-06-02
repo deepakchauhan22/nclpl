@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {useHistory} from "react-router-dom";
 import {  Redirect, Route, Link } from 'react-router-dom';
+import { Container, Button, Alert } from 'react-bootstrap';
+
 import {FaSpinner} from  "react-icons/fa";
 
 class AddClient extends Component {
@@ -45,17 +47,18 @@ class AddClient extends Component {
     
     render()
     {
-        if (this.state.IsAdded == true) {
-            return <Redirect to="/clients" />;
-          }
-          
+       console.log("dee check"+ this.state.IsAdded)
+       
+    
+         
        
         return (
-     <div>
+     <div class>
           <div class="row">
          <div class="col-md-12 col-sm-12">
 
          <h3 class="font-weight-bold">Add New Client</h3>
+         {this.state.IsAdded && <div><br /><Alert variant="success">Added Successfully </Alert></div>}
                  
             <div class="machine-form">
                {/* <form> */}
@@ -65,11 +68,11 @@ class AddClient extends Component {
                   </div>               
                  
             
-                  <button type="submit" class="btn btn-black" onClick = {this.addClient} 
-                  disabled={this.state.isLoading}>
+                  <button type="submit" class="btn btn-black" onClick = {this.addClient} >
                     {this.state.isLoading &&  <FaSpinner></FaSpinner> }
-                    &nbsp;
-                    Add Client</button>
+                    &nbsp;  {this.state.isLoading && <span> Adding Client </span> }
+                    {!this.state.isLoading && <span> Add Client </span> }
+                   </button>
                  
                  
                   {/* <button onClick={this.addMachine} href="#"  type="button" class="btn btn-black">

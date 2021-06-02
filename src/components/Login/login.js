@@ -10,7 +10,7 @@ class Login extends Component {
     constructor(props){
         super(props)
         let islogged= false;
-        let  isLoading=true;
+        let isLoading=true;
         this.state = {
             credentials :{email:'',password:''}
         }
