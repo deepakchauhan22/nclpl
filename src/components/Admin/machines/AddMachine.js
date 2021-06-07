@@ -49,7 +49,7 @@ class AddMachine extends Component {
      
        
         return (
-     <div>
+       <div>
           <div class="row">
          <div class="col-md-12 col-sm-12">
          {this.state.IsAdded && <div><br /><Alert variant="success">Added Successfully </Alert></div>}

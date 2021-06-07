@@ -14,6 +14,7 @@ import Display from './Display';
 export class Clients extends Component {
   constructor(props) {
     super(props);
+   
     this.state = {
       clients: [],
       selectedClient:'',
@@ -21,6 +22,7 @@ export class Clients extends Component {
       error: false,
       currentPage: 1,
       userPerPage: 15,
+       
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -68,9 +70,12 @@ export class Clients extends Component {
   }
   
   render () {
+    
 
     const { clients,token,selectedClient,currentPage,userPerPage } = this.state;
-
+   
+      
+    
     const indexOfLastPost = currentPage * userPerPage;
     const indexOfFirstPost = indexOfLastPost - userPerPage;
     const currentUsers= clients.slice(indexOfFirstPost, indexOfLastPost)
@@ -93,11 +98,16 @@ export class Clients extends Component {
         
          );
     });
+ 
+
+    
 
 
     if(clients.code == "token_not_valid") {
       return <h1> Fetching client..</h1>
     }
+
+    
     
     
 
@@ -254,6 +264,8 @@ export class Clients extends Component {
           <Route path = "/clients/:companyName" >
             <MemberDetail   token = {token}/>
                      </Route>
+                     
+                     
                      
                 </div>
 {/*          

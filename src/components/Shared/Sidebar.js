@@ -14,6 +14,7 @@ class Sidebar extends Component {
       islogout: false
     };
   }
+
   signOut = () => {
     localStorage.removeItem("token");
     this.setState({
@@ -21,6 +22,17 @@ class Sidebar extends Component {
     });
   };
 
+  getData(){
+    setTimeout(() => {
+      localStorage.removeItem("token");
+      this.setState({
+        islogout: true
+      })
+    }, 30 * 60 * 1000)
+  }
+  componentDidMount() {
+    this.getData();
+}
 
     render () {
       if (this.state.islogout) {
@@ -51,7 +63,7 @@ class Sidebar extends Component {
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
               <li class="nav-item" >
-                <NavLink class="nav-link " to= "/dashboard">
+                <NavLink class="nav-link active" to= "/dashboard">
                 <i class="icon-layout menu-icon"></i>
                 <FiGrid></FiGrid> &nbsp;
                   <span class="menu-title">Dashboard</span>

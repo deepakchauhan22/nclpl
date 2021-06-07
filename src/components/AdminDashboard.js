@@ -62,7 +62,12 @@ class AdminDashboard extends Component{
         
           <BrowserRouter>
               
-              <div className="container-scroller">
+              
+              <Switch>
+          
+              <Route exact path='/login' component={ Login } />
+              <Route  path='/register' component={ Register } />
+               <div className="container-scroller">
                         <Navbar/>
                     
                         <div className="container-fluid page-body-wrapper">
@@ -71,14 +76,14 @@ class AdminDashboard extends Component{
                             
                                 <div className="content-wrapper">
                                 
-                <Switch>
-                    <Route exact path='/login' component={ Login } />
-                    <Route  path='/register' component={ Register } />
+       
+                   
                     <Route exact path='/dashboard' component={ Dashboard } />
+                    
                     <ProtectedRoute path="/dashboard"> 
                     </ProtectedRoute>
                     
-                    <Route path='/clients' component={ MainClient } />
+                    <Route path='/clients/' component={ MainClient } />
                     <Route path='/machines' component={ MachineList } />
                     <Route path='/users' component={ Users } />
                     <Route path = '/clients/:clientCompany_name' component={ MemberDetail }/>
@@ -90,12 +95,12 @@ class AdminDashboard extends Component{
                    </Route>
 
                    <Redirect to='/dashboard' />
-                 </Switch>
+              
               </div>
               </div>
               </div>
               </div>
-          
+              </Switch>
           </BrowserRouter>
         )
     }

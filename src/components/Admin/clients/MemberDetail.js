@@ -4,13 +4,14 @@ import {useParams} from "react-router-dom"
 import { useState, useEffect } from "react"
 import Clients from "./Clients"
 import { Link } from 'react-router-dom';
-
+import ClientList from  './ClientList'
+import { Switch, Route, Redirect,BrowserRouter } from 'react-router-dom';
 
 function MemberDetail(props) {
 
     console.log("Deepak inside member:" )
     let { companyName } = useParams();
-    console.log(companyName)
+    console.log("before " + companyName)
     const [member, setMember] = useState([]);
     const [loading, setLoading] = useState(false);
     const url = `http://127.0.0.1:8000/api/${companyName}/client/`;
@@ -33,7 +34,7 @@ function MemberDetail(props) {
           console.log(member)
       })
        
-    });
+    },[companyName]);
  
      console.log(member);
     
@@ -42,8 +43,9 @@ function MemberDetail(props) {
       return <h1>Loading</h1>
     }
     return (
+      <BrowserRouter> 
+      
   
-       
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -62,34 +64,37 @@ function MemberDetail(props) {
                           <th>No. of Machines</th>
                         </tr>  
                       </thead>
-                      <tbody>
+                      <tbody className="userBox">
                 
                         {member.map(item => (
                                                
-                              <tr key={item.id}>          
-                                  <td class="font-weight-bold">{item.user_name}</td>
-                                  <td >{item.email}</td>
-                                  <td class="font-weight-medium"><div class="badge badge-success">{item.company}</div>
-                                  </td>
-                                  <td >  25
-                                    
-                              {/* <Link to = "/user/editUser" >  <MdEdit size={25} style={{ cursor: 'pointer' }} /> </Link>            
-                               &nbsp;&nbsp; |&nbsp; &nbsp; 
-                               <Link to = "/user/deleteUser" > <MdDelete size={25} style={{ cursor: 'pointer' }}/></Link>   
-                                */}
-                                         </td>                                        
-                                </tr>                                            
+                             <Link to ={`/clients/${item.id}`} > 
+                               <tr key={item.id}>          
+                                        <td class="font-weight-bold">{item.user_name}</td>
+                                        <td >{item.email}</td>
+                                      
+                                        <td class="font-weight-medium"><div class="badge badge-success">{item.company}</div>
+                                        </td>
+                                        <td > 25 </td>                                        
+                                </tr>   
+                             </Link>                                         
 
                            ))} 
-
-                                                                   
+                                                                  
                       </tbody>
                     </table>
                    </div>
+               
                 </div>
               </div>
             </div>
-           
+       
+        
+           <Route path = "/clients/:Id" >
+            <ClientList   token = {props.token}/>
+                     </Route> 
+           </BrowserRouter> 
+      
        
     )
 

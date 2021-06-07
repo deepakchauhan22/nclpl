@@ -77,10 +77,10 @@ class Register extends Component {
                      <label>Company</label>
                      <input type="text"  name= "company" class="form-control" placeholder="User Name" value = {this.state.credentials.company} onChange = {this.inputChanged}/>
                   </div>
-                  <div class="form-group">
+                  {/* <div class="form-group">
                   <label for="example-date-input">Date of Birth</label>
                     <input class="form-control" type="date" name= "date_of_birth" value="2011-08-19" id="example-date-input" value = {this.state.credentials.date_of_birth} onChange = {this.inputChanged}/>
-                 </div>
+                 </div> */}
                   <div class="form-group">
                      <label>Password</label>
                      <input type="password" name= "password"  class="form-control" placeholder="Password" value = {this.state.credentials.password} onChange = {this.inputChanged}/>

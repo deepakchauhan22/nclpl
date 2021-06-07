@@ -213,3 +213,15 @@ padding: .375rem .75rem!important;
   background-color: #57B657!important;
   border-color: #57B657!important;
 }
+
+.userBox a, .userBox a:hover{
+  text-decoration: none;
+  color: #000;
+  display: contents;
+}
+
+
+.userBox a:nth-of-type(even){
+  background-color: #FFF!important;
+
+}

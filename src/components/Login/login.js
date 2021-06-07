@@ -67,7 +67,7 @@ class Login extends Component {
 
       <div class="sidenav">
          <div class="login-main-text">
-            <h2>NCL<br/> Login Page</h2>
+            <h2>NCL<br/> Customer Login <br /> Page</h2>
             <p>Login here to access.</p>
          </div>
       </div>
